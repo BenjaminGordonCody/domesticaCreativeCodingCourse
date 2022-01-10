@@ -1,0 +1,45 @@
+<html>
+  <body>
+    <canvas width="600" height="600"></canvas>
+    <script>
+      // orange triangle
+      let canvas = document.querySelector("canvas");
+      let context = canvas.getContext("2d");
+      context.fillStyle = "lightSalmon";
+      context.fillRect(100, 100, 400, 400); //coords of top left and opposite corner
+
+      //   border
+      context.lineWidth = 4;
+      context.beginPath();
+      context.rect(100, 100, 400, 400);
+      context.stroke();
+
+      // circle
+      context.beginPath();
+      context.arc(300, 300, 100, 0, Math.PI * 2);
+      context.stroke();
+
+      //for loop to make grid of random squares
+      let width = 60;
+      let height = 60;
+      let gap = 20;
+
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 5; j++) {
+          let x = (width + gap) * i;
+          let y = (height + gap) * j;
+
+          context.beginPath();
+          context.rect(x, y, width, height);
+          context.stroke();
+
+          if (Math.random() < 0.5) {
+            context.beginPath();
+            context.rect(x + 5, y + 5, width - 10, height - 10);
+            context.stroke();
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
