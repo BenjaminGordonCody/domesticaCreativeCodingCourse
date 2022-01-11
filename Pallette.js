@@ -51,27 +51,41 @@ class ColorSquare {
     //top and bottom rows
     colorArray[0] = get1dGradientArray(rgb1, rgb2, steps);
     colorArray[steps - 1] = get1dGradientArray(rgb3, rgb4, steps);
+    // console.table(colorArray);
 
     // cols
     for (let col = 0; col < steps; col++) {
+      console.log(colorArray[0][col], colorArray[steps - 1][col], steps);
       const linearGradient = get1dGradientArray(
         colorArray[0][col],
         colorArray[steps - 1][col],
         steps
       );
+
+      //   console.log(linearGradient);
       for (let row = 0; row < steps; row++) {
-        colorArray[col][row] = linearGradient[row];
+        // console.log(linearGradient[row]);
+
+        //RUN THE FILE AND SEE THIS OUTPUT TO SEE WHERE THE FU IS
+        colorArray[col][row] = `${col}, ${row}`; //linearGradient[row];
       }
     }
-    this.array = colorArray;
+    this.table = colorArray;
   }
 }
-
-sample = new ColorSquare([0, 0, 0], [0, 255, 0], [0, 0, 255], [255, 0, 0], 5);
-console.table(sample.array);
 
 module.exports = {
   getSpacedArrayOfIntsBetween,
   get1dGradientArray,
   ColorSquare,
 };
+
+//test
+const sample = new ColorSquare(
+  [1, 1, 1],
+  [22, 22, 22],
+  [33, 33, 33],
+  [44, 44, 44],
+  5
+);
+console.table(sample.table);
