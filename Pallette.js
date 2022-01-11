@@ -10,6 +10,9 @@ const getSpacedArrayOfIntsBetween = (num1, num2, steps) => {
   return array;
 };
 
+/*
+returns an array of RGB colours spaced evenly between two reference colours 
+*/
 const get1dGradientArray = (rgbA, rgbB, steps) => {
   //empty 2d array
   let gradientArray = [];
