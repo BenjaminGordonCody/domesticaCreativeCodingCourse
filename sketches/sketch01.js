@@ -1,7 +1,9 @@
 const canvasSketch = require("canvas-sketch");
+const random = require("canvas-sketch-util/random");
 
 const settings = {
   dimensions: [1080, 1080],
+  animate: true,
 };
 
 const sketch = () => {
@@ -25,8 +27,16 @@ const sketch = () => {
         context.stroke();
 
         if (Math.random() < 0.5) {
+          context.save();
+          context.rotate(5);
+          const smallSqrOffset = random.range(5, 20);
           context.beginPath();
-          context.rect(x + 5, y + 5, sqrWidth - 10, sqrHeight - 10);
+          context.rect(
+            x + smallSqrOffset,
+            y + smallSqrOffset,
+            sqrWidth - smallSqrOffset * 2,
+            sqrHeight - smallSqrOffset * 2
+          );
           context.stroke();
         }
       }

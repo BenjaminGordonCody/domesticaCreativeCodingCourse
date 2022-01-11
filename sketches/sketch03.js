@@ -10,17 +10,29 @@ const settings = {
 const sketch = () => {
   //define agents
   let agents = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 200; i++) {
     agents[i] = new Agent(
       settings.dimensions[0] * Math.random(),
       settings.dimensions[1] * Math.random(),
-      30 * Math.random()
+      2 * Math.random()
     );
   }
 
-  return ({ context, width, height }) => {
-    context.fillStyle = "white";
+  return ({ context, width, height, time }) => {
+    context.fillStyle = "lightcoral";
     context.fillRect(0, 0, width, height);
+
+    //set random colour
+    const timeMarker = Math.round(time * 10);
+    if (timeMarker % 9 == 0 || timeMarker % 11 == 0) {
+      context.strokeStyle = `rgba(
+      ${random.range(100, 255)},
+      ${random.range(100, 155)},
+      ${random.range(100, 255)},
+      0.75)`;
+    } else {
+      context.strokeStyle = "lightpink";
+    }
 
     //lines between agents
     for (let i = 0; i < agents.length; i++) {
@@ -28,9 +40,9 @@ const sketch = () => {
       for (let j = i + 1; j < agents.length; j++) {
         const other = agents[j];
         const dist = agent.pos.getDist(other.pos);
-        if (dist < 100) {
+        if (dist < 60) {
           context.save();
-          context.lineWidth = math.mapRange(dist, 0, 100, 12, 1);
+          context.lineWidth = math.mapRange(dist, 0, 50, 12, 1);
           context.beginPath();
           context.moveTo(agent.pos.x, agent.pos.y);
           context.lineTo(other.pos.x, other.pos.y);

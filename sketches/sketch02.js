@@ -1,8 +1,12 @@
 const canvasSketch = require("canvas-sketch");
+const Color = require("canvas-sketch-util/color");
+const random = require("canvas-sketch-util/random");
 
 const settings = {
   dimensions: [1080, 1080],
   animate: true,
+  fps: 12,
+  playbackRate: "throttle",
 };
 
 const degToRad = (degrees) => {
@@ -14,7 +18,7 @@ const randomRange = (min, max) => {
 };
 const sketch = () => {
   return ({ context, width, height }) => {
-    context.fillStyle = "white";
+    context.fillStyle = "rgb(255,200,255)";
     context.fillRect(0, 0, width, height);
 
     const cx = width * 0.5;
@@ -40,8 +44,20 @@ const sketch = () => {
         width * Math.random(),
         height * Math.random()
       );
-      grd.addColorStop(0, "gold");
-      grd.addColorStop(1, "blue");
+      grd.addColorStop(
+        0,
+        `rgba(
+         ${random.range(1, 255)},
+         ${random.range(1, 255)},
+         ${random.range(1, 255)}, ${Math.random()})`
+      );
+      grd.addColorStop(
+        1,
+        `rgba(
+         ${random.range(1, 255)},
+         ${random.range(1, 255)},
+         ${random.range(1, 255)}, ${Math.random()})`
+      );
       context.fillStyle = grd;
       context.strokeStyle = grd;
 
