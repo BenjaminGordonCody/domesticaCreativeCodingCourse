@@ -39,24 +39,39 @@ shades.
 */
 
 class ColorSquare {
-  constructor(rgb1, rgb2, rgb3, rgb4, stepsBetweenCorners) {
-    //interpret corners of square
-    const corners = [rgb1, rgb2, rgb3, rgb4];
-    for (let i = 0; i < corners.length; i++) {
-      const color = corners[i].split(",");
-      for (let j = 0; j < color.length; j++) {
-        color[j] = parseInt(color[j]);
+  constructor(rgb1, rgb2, rgb3, rgb4, steps) {
+    //make array
+    const colorArray = [];
+    for (let i = 0; i < steps; i++) {
+      colorArray[i] = [];
+      for (let j = 0; j < steps; j++) {
+        colorArray[i][j] = [];
       }
     }
+    //top and bottom rows
+    colorArray[0] = get1dGradientArray(rgb1, rgb2, steps);
+    colorArray[steps - 1] = get1dGradientArray(rgb3, rgb4, steps);
+
+    // cols
+    for (let col = 0; col < steps; col++) {
+      const linearGradient = get1dGradientArray(
+        colorArray[0][col],
+        colorArray[steps - 1][col],
+        steps
+      );
+      for (let row = 0; row < steps; row++) {
+        colorArray[col][row] = linearGradient[row];
+      }
+    }
+    this.array = colorArray;
   }
 }
 
-const sample = new ColorSquare(
-  "255,255,255",
-  "255,255,255",
-  "255,255,255",
-  "255,255,255"
-);
+sample = new ColorSquare([0, 0, 0], [0, 255, 0], [0, 0, 255], [255, 0, 0], 5);
+console.table(sample.array);
 
-const gradientArray = get1dGradientArray([0, 0, 0], [100, 200, 255], 20);
-console.log(gradientArray);
+module.exports = {
+  getSpacedArrayOfIntsBetween,
+  get1dGradientArray,
+  ColorSquare,
+};
