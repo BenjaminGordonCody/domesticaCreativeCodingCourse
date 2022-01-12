@@ -51,23 +51,17 @@ class ColorSquare {
     //top and bottom rows
     colorArray[0] = get1dGradientArray(rgb1, rgb2, steps);
     colorArray[steps - 1] = get1dGradientArray(rgb3, rgb4, steps);
-    // console.table(colorArray);
 
     // cols
     for (let col = 0; col < steps; col++) {
-      console.log(colorArray[0][col], colorArray[steps - 1][col], steps);
       const linearGradient = get1dGradientArray(
         colorArray[0][col],
         colorArray[steps - 1][col],
         steps
       );
 
-      //   console.log(linearGradient);
       for (let row = 0; row < steps; row++) {
-        // console.log(linearGradient[row]);
-
-        //RUN THE FILE AND SEE THIS OUTPUT TO SEE WHERE THE FU IS
-        colorArray[col][row] = `${col}, ${row}`; //linearGradient[row];
+        colorArray[row][col] = linearGradient[row]; //
       }
     }
     this.table = colorArray;
