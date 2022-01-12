@@ -21,7 +21,6 @@ const sketch = () => {
         let x = initialPadding + (sqrWidth + gap) * i;
         let y = initialPadding + (sqrHeight + gap) * j;
 
-        console.log(x, y);
         context.beginPath();
         context.rect(x, y, sqrWidth, sqrHeight);
         context.stroke();
