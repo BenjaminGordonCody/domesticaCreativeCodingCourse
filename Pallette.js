@@ -61,10 +61,16 @@ class ColorSquare {
       );
 
       for (let row = 0; row < steps; row++) {
-        colorArray[row][col] = linearGradient[row]; //
+        colorArray[row][col] = linearGradient[row].join(); //
       }
     }
     this.table = colorArray;
+  }
+
+  random() {
+    let col = Math.round(Math.random() * (this.table.length - 1));
+    let row = Math.round(Math.random() * (this.table.length - 1));
+    return this.table[row][col];
   }
 }
 
@@ -83,3 +89,4 @@ const sample = new ColorSquare(
   5
 );
 console.table(sample.table);
+console.log(sample.random());
