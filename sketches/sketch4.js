@@ -3,6 +3,7 @@ const random = require("canvas-sketch-util/random");
 
 const settings = {
   dimensions: [1080, 1080],
+  animate: true,
 };
 
 const sketch = () => {
@@ -11,8 +12,8 @@ const sketch = () => {
     context.fillRect(0, 0, width, height);
 
     //define measurements
-    const cols = 10;
-    const rows = 10;
+    const cols = 100;
+    const rows = 100;
     const numCells = cols * rows;
 
     const gridw = width * 0.8;
