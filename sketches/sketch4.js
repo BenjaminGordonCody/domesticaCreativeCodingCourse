@@ -1,23 +1,44 @@
 const canvasSketch = require("canvas-sketch");
 const random = require("canvas-sketch-util/random");
+const Pallette = require("../Pallette");
+const tweakpane = require("tweakpane");
+const math = require("canvas-sketch-util/math");
 
 const settings = {
-  dimensions: [1080, 1080],
+  dimensions: [500, 500],
   animate: true,
+  fps: 60,
+  playbackRate: "throttle",
 };
 
+const params = {
+  size: 10,
+  scaleMin: 1,
+  scaleMax: 30,
+};
 const sketch = () => {
-  return ({ context, width, height }) => {
-    context.fillStyle = "white";
+  return ({ context, width, height, frame }) => {
+    //define colour context
+    const colours = new Pallette.ColorSquare(
+      [0, 0, 0],
+      [125, 125, 0],
+      [0, 255, 240],
+      [255, 255, 255],
+      params.size
+    );
+
+    //background colour
+    context.fillStyle = "black";
     context.fillRect(0, 0, width, height);
 
-    //define measurements
-    const cols = 100;
-    const rows = 100;
+    //link params to params object
+    const cols = params.size;
+    const rows = cols;
     const numCells = cols * rows;
 
-    const gridw = width * 0.8;
-    const gridh = height * 0.8;
+    //measurements from params
+    const gridw = width * 1; //0.8;
+    const gridh = height * 1; // 0.8;
 
     const cellw = gridw / cols;
     const cellh = gridh / rows;
@@ -34,9 +55,10 @@ const sketch = () => {
       const x = col * cellw;
       const y = row * cellh;
 
-      //noise
-      const n = random.noise2D(x, y, 0.001);
-      const angle = n * Math.PI;
+      //noise and reatonship to line angle
+      const n = random.noise2D(x + frame * 10, y + frame * 10, 0.001);
+      const angle = n * Math.PI * 0.2;
+      const scale = math.mapRange(n, -1, 1, params.scaleMin, params.scaleMax);
 
       //line def
       const w = cellw * 0.8;
@@ -44,6 +66,8 @@ const sketch = () => {
 
       //drawing
       context.save();
+      context.strokeStyle = `rgb(${colours.table[row][col]})`;
+      context.lineWidth = scale;
       context.translate(x, y); //cell location
       context.translate(margx, margy); //accomodate margin
       context.translate(cellw * 0.5, cellh * 0.5); //move to center of cell
@@ -57,4 +81,14 @@ const sketch = () => {
   };
 };
 
+const createpane = () => {
+  const pane = new tweakpane.Pane();
+  let folder;
+  folder = pane.addFolder({ title: "grid" });
+  folder.addInput(params, "size", { min: 2, max: 50, step: 1 });
+  folder.addInput(params, "scaleMin", { min: 1, max: 100 });
+  folder.addInput(params, "scaleMax", { min: 1, max: 100 });
+};
+
+createpane();
 canvasSketch(sketch, settings);
