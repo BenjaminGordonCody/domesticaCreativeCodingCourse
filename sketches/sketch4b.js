@@ -96,7 +96,7 @@ const sketch = () => {
       context.translate(x, y); //cell location
       context.translate(margx, margy); //accomodate margin
       context.translate(cellw * 0.5, cellh * 0.5); //move to center of cell
-      context.lineWidth = Math.abs(angle);
+      context.lineWidth = Math.abs(angle) + 0.001;
 
       context.beginPath();
 
