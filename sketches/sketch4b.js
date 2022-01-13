@@ -12,7 +12,7 @@ const settings = {
 };
 
 const params = {
-  //size/dynamics
+  //size/dynamics /
   size: 10,
   scaleMin: 1,
   scaleMax: 30,
